@@ -48,9 +48,14 @@ def run_reconciliation() -> List[Dict[str, Any]]:
             if b_entry.value is None or a_rec.total_value != b_entry.value:
                 issues.append("VALUE_MISMATCH")
         elif len(b_list) > 1:
-            # For multiple entries (e.g. split transactions), check if the total sum matches
+            # Check both cases:
+            # 1. Are they duplicate entries with the same value as System A?
+            # 2. Or is it a split entry whose sum equals System A (like REC-1055)?
             b_total = sum((b.value for b in b_list if b.value is not None), Decimal('0'))
-            if a_rec.total_value != b_total:
+            has_matching_copy = any(b.value == a_rec.total_value for b in b_list)
+            
+            # Only flag VALUE_MISMATCH if neither the sum nor an individual duplicate matches A
+            if a_rec.total_value != b_total and not has_matching_copy:
                 issues.append("VALUE_MISMATCH")
 
         # Issue 4: LOCATION_MISMATCH (Tenant boundary check)
