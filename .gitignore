@@ -1,0 +1,31 @@
+# Assignment Word files
+*.docx
+
+# Python virtual environment
+venv/
+.venv/
+env/
+
+# Python compiled cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Frontend dependencies and builds
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Local databases and journals (can be recreated anytime from CSVs)
+*.sqlite3-journal
+
+# Environment variables & secrets
+.env
+.env.local
+
+# Operating System & IDE junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
